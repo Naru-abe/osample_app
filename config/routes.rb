@@ -12,14 +12,31 @@ Rails.application.routes.draw do
     sessions: 'public/sessions'
   }
 
-  get '/' => 'homes#top'
-  get 'about' => 'homes#about'
-  resources :posts
-  
-  resources :end_user
-
+  # ゲストログイン用
   devise_scope :end_user do
     post 'public/guest_sign_in', to: 'public/sessions#guest_sign_in'
   end
+
+  namespace :admin do
+    get '/' => 'homes#top'
+    resources :post, only: [:index, :shou, :destroy] do
+      resources :post_comments, only: [:index, :shou, :destroy]
+      resources :tags, except: [:new]
+    end
+    resources :end_users, only: [:index, :show, :edit, :update]
+  end
+
+  scope module: :public do
+    get '/' => 'homes#top'
+    get 'about' => 'homes#about'
+    resources :end_users, only: [:index, :show, :edit, :update]
+    resources :posts do
+      resources :post_comments, only: [:create, :destroy]
+      resource :favorites, only: [:create, :destroy]
+    end
+    get 'end_users/unsubscribe' => 'end_users#unsubscribe'
+    patch '/end_users/withdraw' => 'end_users#withdraw'
+  end
+
   # For details on the DSL available within this file, see https://guides.rubyonrails.org/routing.html
 end

@@ -1,14 +1,2 @@
-<div class="main posts-new">
-  <div class="container">
-    <%= form_with model: @post, url: posts_path, metod: :post do |f| %>
-      <h1 class="form-heading">投稿する</h1>
-      <div class="form">
-        <div class="form-body">
-          <%= f.file_field :image, accept: "image/*" %>
-          <%= f.text_area :content, class: "textarea" %>
-          <%= f.submit "投稿" %>
-        </div>
-      </div>
-    <% end %>
-  </div>
-</div>
+<h1>Public::Posts#new</h1>
+<p>Find me in app/views/public/posts/new.html.erb</p>

@@ -1,0 +1,15 @@
+<div class="main posts-new">
+  <div class="container">
+    <%= form_with model: @post, url: posts_path, method: :post do |f| %>
+      <h1 class="form-heading">投稿する</h1>
+      <div class="form">
+        <div class="form-body">
+          <%= f.file_field :image, accept: "image/*" %>
+          <%= f.text_area :content, class: "textarea" %>
+
+          <%= f.submit "投稿" %>
+        </div>
+      </div>
+    <% end %>
+  </div>
+</div>
